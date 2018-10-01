@@ -67,7 +67,7 @@ func GetProductType() (Type, error) {
 	var product Type
 	var err error
 
-	product.Vendor, err = ReadDMIStringParameter("/sys/class/dmi/id/product_vendor")
+	product.Vendor, err = ReadDMIStringParameter("/sys/class/dmi/id/sys_vendor")
 	if err != nil {
 		return Type{}, err
 	}
