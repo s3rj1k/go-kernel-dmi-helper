@@ -31,7 +31,7 @@ func GetBoardType() (Type, error) {
 
 	board.Serial, err = ReadDMIStringParameter("/sys/class/dmi/id/board_serial")
 	if err != nil {
-		return BoardType{}, err
+		return Type{}, err
 	}
 
 	return board, nil
