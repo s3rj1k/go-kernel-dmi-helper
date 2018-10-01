@@ -6,35 +6,83 @@ import (
 	"path/filepath"
 )
 
-// BoardType - platform vendor, name, serial
-type BoardType struct {
-	BoardVendor string
-	BoardName   string
-	BoardSerial string
+// Type - platform vendor, name, serial
+type Type struct {
+	Vendor string
+	Name   string
+	Serial string
 }
 
 // GetBoardType - get board type using kernel DMI information
-func GetBoardType() (BoardType, error) {
+func GetBoardType() (Type, error) {
 
-	var board BoardType
+	var board Type
 	var err error
 
-	board.BoardVendor, err = ReadDMIStringParameter("/sys/class/dmi/id/board_vendor")
+	board.Vendor, err = ReadDMIStringParameter("/sys/class/dmi/id/board_vendor")
 	if err != nil {
-		return BoardType{}, err
+		return Type{}, err
 	}
 
-	board.BoardName, err = ReadDMIStringParameter("/sys/class/dmi/id/board_name")
+	board.Name, err = ReadDMIStringParameter("/sys/class/dmi/id/board_name")
 	if err != nil {
-		return BoardType{}, err
+		return Type{}, err
 	}
 
-	board.BoardSerial, err = ReadDMIStringParameter("/sys/class/dmi/id/board_serial")
+	board.Serial, err = ReadDMIStringParameter("/sys/class/dmi/id/board_serial")
 	if err != nil {
 		return BoardType{}, err
 	}
 
 	return board, nil
+}
+
+// GetChassisType - get chassis type using kernel DMI information
+func GetChassisType() (Type, error) {
+
+	var chassis Type
+	var err error
+
+	chassis.Vendor, err = ReadDMIStringParameter("/sys/class/dmi/id/chassis_vendor")
+	if err != nil {
+		return Type{}, err
+	}
+
+	chassis.Name, err = ReadDMIStringParameter("/sys/class/dmi/id/chassis_name")
+	if err != nil {
+		return Type{}, err
+	}
+
+	chassis.Serial, err = ReadDMIStringParameter("/sys/class/dmi/id/chassis_serial")
+	if err != nil {
+		return Type{}, err
+	}
+
+	return chassis, nil
+}
+
+// GetProductType - get product type using kernel DMI information
+func GetProductType() (Type, error) {
+
+	var product Type
+	var err error
+
+	product.Vendor, err = ReadDMIStringParameter("/sys/class/dmi/id/product_vendor")
+	if err != nil {
+		return Type{}, err
+	}
+
+	product.Name, err = ReadDMIStringParameter("/sys/class/dmi/id/product_name")
+	if err != nil {
+		return Type{}, err
+	}
+
+	product.Serial, err = ReadDMIStringParameter("/sys/class/dmi/id/product_serial")
+	if err != nil {
+		return Type{}, err
+	}
+
+	return product, nil
 }
 
 // ReadDMIStringParameter - reads simple DMI kernel key,value(STRING) parameter; where key - filename, value - content on first line
